@@ -1,0 +1,477 @@
+@font-face {
+  font-family: 'TitanOne';
+  src: url('./fonts/TitanOne-Regular.ttf') format('truetype');
+}
+
+body {
+  height: 100vh;
+  overflow: hidden;
+  font-family: Arial, sans-serif;
+  background-image: url(images/BG.png);
+  background-size: cover;
+  position: relative;
+}
+
+.logos {
+  padding-top: 15PX;
+  padding-left: 15px;
+  height: 20vh;
+}
+
+.title_img {
+  width: 40vw;
+  height: 17vh;
+  position: absolute;
+  top: 15px;
+  left: 30vw;
+}
+
+.Iscar_Logo,
+.It_logo {
+  height: 5vh;
+  width: 7vw;
+}
+
+.It_logo {
+  padding-left: 5px;
+  height: 7vh;
+  width: 5vw;
+}
+
+.main {
+  display: flex;
+  justify-content: space-evenly;
+  padding-inline: 5vw;
+  padding-top: 30px;
+  height: 65vh;
+  width: 100vw;
+}
+
+#number-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  width: 40vw;
+  height: fit-content;
+  min-height: 60vh;
+  background-color: #10488c63;
+  border-radius: 20px;
+  padding: 10px;
+  box-shadow: #fff 0px 0px 15px, #10478c 0px 0px 5px inset;
+  position: relative;
+}
+
+.number {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 3px;
+  width: 8.5%;
+  height: 10%;
+  overflow: hidden;
+  font-weight: bold;
+  font-size: 3.4vh;
+  cursor: default;
+  background-color: #eee;
+  border: 1px solid #ccc;
+  border-radius: 50%;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
+    rgba(0, 0, 0, 0.3) 0px 30px 60px -30px,
+    rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+}
+
+.number.selected {
+  background-color: rgb(120, 255, 47);
+}
+
+#ball {
+  aspect-ratio: 1/1;
+  max-width: 100%;
+  max-height: 100%;
+  border-radius: 50%;
+  box-shadow: #fff 0px 0px 15px, #10478c 0px 0px 5px inset;
+}
+
+#number-display.show::before {
+  content: "";
+  border: 10px solid #ff0f0f98;
+  border-right: 5px solid transparent;
+  border-left: 5px solid transparent;
+  border-radius: 50%;
+  width: 110%;
+  height: 110%;
+  position: absolute;
+  -moz-animation: spinoffPulse 3s infinite ease-in-out;
+  -webkit-animation: spinoffPulse 3s infinite ease-in-out;
+}
+
+#number-display.show::after {
+  content: "";
+  border: 10px solid #10488cbe;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-radius: 50%;
+  width: 105%;
+  height: 105%;
+  position: absolute;
+  -moz-animation: spinoffPulse 4s infinite linear;
+  -webkit-animation: spinoffPulse 4s infinite linear;
+}
+
+#number-display {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  aspect-ratio: 1/1;
+  border-radius: 50%;
+  position: relative;
+  font-size: calc(9vh + 18vw);
+  font-weight: bold;
+  -webkit-text-stroke: 3px black;
+  text-shadow: 5px 8px 3px #fff;
+  color: #0056bf;
+}
+
+#runningNumber {
+  position: absolute;
+}
+
+
+button {
+  font-size: 16px;
+  padding: 10px 20px;
+  margin: 0 10px;
+}
+
+#buzzer {
+  position: absolute;
+  aspect-ratio: 1/1;
+  bottom: 30px;
+  left: calc(50% - 1vw);
+  width: 6vw;
+  height: 10vh;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: #10478c 0px 0px 10px;
+}
+
+.roll-btn-show {
+  transform: scale(1);
+  transition: 0.5s ease-in-out;
+}
+
+.roll-btn-hide {
+  transform: scale(0);
+  transition: 0.5s ease-in-out;
+}
+
+#mute,
+#reset {
+  transition: 0.5s all;
+}
+
+#mute {
+  position: fixed;
+  cursor: pointer;
+  top: 10px;
+  right: 10px;
+  z-index: 9999;
+}
+
+#reset {
+  position: fixed;
+  top: 50px;
+  right: 5px;
+  cursor: pointer;
+  display: flex;
+  padding: 0;
+  background: none;
+  border: none;
+  z-index: 9999;
+
+}
+
+#mute:hover,
+#reset:hover {
+  z-index: 1000;
+  transform: scale(1.4);
+  color: #ffe00f;
+}
+
+#rules {
+  font-family: cursive;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: absolute;
+  width: 20vw;
+  top: 50%;
+  left: calc(50% - 150px);
+}
+
+#max {
+  border-radius: 5px;
+  width: 10vw;
+  border: 1px solid grey;
+}
+
+output {
+  color: #10478c;
+  font-size: 5vh;
+  -webkit-text-stroke: #fff 1px;
+}
+
+
+
+/* PopUp screen */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  animation: heartbeat 1s infinite;
+
+}
+
+.overlay.active {
+  display: flex;
+}
+
+#bingo {
+  width: 50%;
+  transform: scale(0);
+  transition: transform 1.5s;
+}
+
+#bingo.scale-active {
+  transform: scale(1);
+}
+
+@keyframes heartbeat {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.02);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* background Waves*/
+
+body .air {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100px;
+  background: url(./images/wave.png);
+  background-size: 1000px 100px;
+
+  z-index: -1;
+}
+
+body .air.air1 {
+  animation: wave 30s linear infinite;
+  z-index: -1;
+  opacity: 1;
+  animation-delay: 0s;
+  bottom: 0;
+  opacity: 0.5;
+}
+
+body .air.air2 {
+  animation: wave2 15s linear infinite;
+  z-index: -2;
+  animation-delay: -5s;
+  bottom: -20px;
+  opacity: 0.6;
+}
+
+body .air.air3 {
+  animation: wave 30s linear infinite;
+  z-index: -3;
+  opacity: 0.2;
+  animation-delay: -2s;
+  bottom: -15px;
+  opacity: 0.5;
+}
+
+body .air.air4 {
+  animation: wave2 5s linear infinite;
+  z-index: -4;
+  opacity: 0.2;
+  animation-delay: -5s;
+  bottom: -10px;
+}
+
+@keyframes wave {
+  0% {
+    background-position-x: 0px;
+  }
+
+  100% {
+    background-position-x: 1000px;
+  }
+}
+
+@keyframes wave2 {
+  0% {
+    background-position-x: 0px;
+  }
+
+  100% {
+    background-position-x: -1000px;
+  }
+}
+
+/* Running Circle  Animatio  */
+
+@-moz-keyframes spinPulse {
+  0% {
+    -moz-transform: rotate(160deg);
+    opacity: 0;
+    box-shadow: 0 0 1px #bdd73c;
+  }
+
+  50% {
+    -moz-transform: rotate(145deg);
+    opacity: 1;
+  }
+
+  100% {
+    -moz-transform: rotate(-320deg);
+    opacity: 0;
+  }
+}
+
+@-moz-keyframes spinoffPulse {
+  0% {
+    -moz-transform: rotate(0deg);
+  }
+
+  100% {
+    -moz-transform: rotate(360deg);
+  }
+}
+
+@-webkit-keyframes spinPulse {
+  0% {
+    -webkit-transform: rotate(160deg);
+    opacity: 0;
+    box-shadow: 0 0 1px #bdd73c;
+  }
+
+  50% {
+    -webkit-transform: rotate(145deg);
+    opacity: 1;
+  }
+
+  100% {
+    -webkit-transform: rotate(-320deg);
+    opacity: 0;
+  }
+}
+
+@-webkit-keyframes spinoffPulse {
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
+}
+
+@-moz-keyframes rotatecircle {
+  0% {
+    -moz-transform: rotate(0deg);
+  }
+
+  100% {
+    -moz-transform: rotate(-360deg);
+  }
+}
+
+@-webkit-keyframes rotatecircle {
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+
+  100% {
+    -webkit-transform: rotate(-360deg);
+  }
+}
+
+/* Flower Cursor animation */
+.circle {
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(to top left, #10478c, #00a2fe);
+  border-radius: 50%;
+  box-shadow: rgba(0, 0, 0, 0.17) 0px -23px 25px 0px inset,
+    rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset,
+    rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px,
+    rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.19) 0px 8px 4px,
+    rgba(0, 0, 0, 0.19) 0px 16px 8px, rgba(0, 0, 0, 0.19) 0px 32px 16px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-left: -20px;
+  pointer-events: none;
+  z-index: 10;
+}
+
+#info {
+  position: fixed;
+  bottom: 15px;
+  right: 15px;
+  cursor: pointer;
+  z-index: 1000;
+
+}
+
+
+#popupContainer {
+  border-radius: 10px;
+  position: fixed;
+  bottom: 50px;
+  right: 45px;
+  color: white;
+  background-color: #10488cc2;
+  box-shadow: #fff 0px 0px 15px, #10478c 0px 0px 5px inset;
+  transform: scale(0);
+  transition: transform 0.3s;
+}
+
+#info:hover #popupContainer {
+  transform: scale(1);
+}
+
+
+h4 {
+  font-family: TitanOne;
+  text-align: center;
+  background-color: #00a1fea8;
+  border-top-left-radius: 10px;
+  border-top-left-radius: 10px;
+  padding-bottom: 2px;
+  padding-top: 2px;
+  padding-top: 2px;
+  border-bottom: #06499a 1px solid;
+  -webkit-text-stroke: 1px black;
+}
+
+p {
+  padding: 10px;
+  font-family: cursive;
+}
