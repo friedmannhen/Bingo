@@ -1,8 +1,8 @@
-// Array to store picked numbers
 var pickedNumbers = [];
 var MaxNumber = 0;
 var numberDisplay = document.getElementById("number-display");
-var drums = document.getElementById("audioDrums");
+var anticipation = document.getElementById("anticipation");
+var anticipation2 = document.getElementById("anticipation2");
 var pop = document.getElementById("audioPop");
 var winning = document.getElementById("winning");
 
@@ -15,8 +15,7 @@ var muteIcon = document.querySelector("#mute");
 var overlay = document.querySelector("#overlay");
 var bingo = document.querySelector("#bingo");
 var numberList = document.getElementById("number-list");
-
-//mute and reset mouse hover
+var randNumForAudio = 0;
 rotateIcon.addEventListener("mouseover", function () {
   rotateIcon.classList.add("fa-spin");
 });
@@ -44,12 +43,10 @@ function startGame() {
   roll.classList.remove("roll-btn-hide");
   roll.classList.add("roll-btn-show");
 }
-// Generate a random number between 1 and MaxNumber
 function generateRandomNumber() {
   return Math.floor(Math.random() * MaxNumber) + 1;
 }
 
-// Generate a new number and display it
 function generateNumber() {
   if (!isClickable) {
     return;
@@ -60,31 +57,35 @@ function generateNumber() {
   document.querySelector("*").style.cursor = "wait";
   numberDisplay.classList.add("show");
   document.querySelector("#reset").disabled = true;
-  // Check if all numbers have been picked
-
-  // Disable generate number button during animation
   var generateButton = document.querySelector("button");
   generateButton.disabled = true;
-  drums.play();
+  randNumForAudio = Math.floor( Math.random() * 100);
+  console.log(randNumForAudio);
+  if (randNumForAudio > 50) {
+    anticipation.play();
+  } else {
+    anticipation2.play();
+  }
 
   // Start displaying random numbers
   var startTime = Date.now();
   var interval = setInterval(function () {
-    // Generate a new random number
     var number = generateRandomNumber();
-
-    // Check if the number has already been picked
-    // if (pickedNumbers.includes(number)) {          // maybe will returne
-    //   return;
-    // }
-    // Display the number
     runningNumber.textContent = number;
-  }, 70); // Display a new number every x second
-  // Stop displaying random numbers after 5 seconds
+  }, 70); 
   setTimeout(function () {
     clearInterval(interval);
-    drums.pause();
-    drums.currentTime = 0;
+    if (randNumForAudio > 50) {
+
+      anticipation.pause();
+      // console.log(anticipation.currentTime)
+       if(anticipation.currentTime > 12) anticipation.currentTime= 0;
+    } else {
+      anticipation2.pause();
+      // console.log(anticipation2.currentTime)
+
+       if(anticipation2.currentTime > 20) anticipation2.currentTime= 0;
+    }
     var number = generateRandomNumber();
 
     while (pickedNumbers.includes(number)) {
@@ -98,12 +99,10 @@ function generateNumber() {
       document.querySelector("*").style.cursor = "default";
       alert("All numbers have been picked!\npress reset to play again...");
     }
-    // Add the number to the picked numbers array
     pickedNumbers.push(number);
     runningNumber.textContent = number;
     var pickedNumber = document.querySelectorAll(".number");
     pickedNumber[number - 1].classList.add("selected");
-    // Enable generate number button after displaying chosen number
     generateButton.disabled = false;
     document.querySelector("#reset").disabled = false;
     numberDisplay.classList.remove("show");
@@ -170,11 +169,12 @@ document.addEventListener("keydown", function (event) {
 });
 var mutebtn = document.getElementById("mute");
 function mute() {
-  drums.muted = !drums.muted;
+  anticipation.muted = !anticipation.muted;
+  anticipation2.muted = !anticipation2.muted;
   pop.muted = !pop.muted;
   winning.muted = !winning.muted;
 
-  if (drums.muted && pop.muted) {
+  if (anticipation.muted && anticipation2.muted && pop.muted) {
     mutebtn.classList.replace("fa-volume-high", "fa-volume-xmark");
   } else {
     mutebtn.classList.replace("fa-volume-xmark", "fa-volume-high");

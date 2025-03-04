@@ -204,7 +204,6 @@ button {
   justify-content: space-between;
   align-items: center;
   position: absolute;
-  width: 20vw;
   top: 50%;
   left: calc(50% - 150px);
 }

@@ -21,12 +21,13 @@
         <img class="It_logo" src="images/It_Logo.png">
     </div>
     <div class="main">
-        
+
         <div id="number-list">
             <div id="rules">
-                <input type="range" id="max" value="90" min="1" max="100"
+                <input type="number" id="max" value="90" min="1" max="100" maxlength="3" oninput="if(this.value.length > 3 || this.value > 100) this.value = 100" style="width:50px;"/>
+                <!-- <input type="range" id="max" value="90" min="1" max="100"
                     oninput="this.nextElementSibling.value = this.value" />
-                <output>90</output>
+                <output>90</output> -->
                 <button onclick="startGame()" class="btn btn-primary btn-lg btn-block">Start</button>
             </div>
 
@@ -41,7 +42,9 @@
     <div class='air air2'></div>
     <div class='air air3'></div>
     <div class='air air4'></div>
-    <audio id="audioDrums" src="audio/anticipated-siren.wav"></audio>
+    <!-- <audio id="anticipation" src="audio/anticipated-siren.wav"></audio> -->
+    <audio id="anticipation" src="audio/anticipation.wav"></audio>
+    <audio id="anticipation2" src="audio/anticipation2.wav"></audio>
     <audio id="audioPop" src="audio/pop.mp3"></audio>
     <audio id="winning" src="audio/Winning.wav"></audio>
 
